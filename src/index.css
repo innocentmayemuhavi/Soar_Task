@@ -1,0 +1,56 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --bg-main: #f5f7fa;
+  --white: #ffffff;
+  --gray: #b1b1b1;
+  --black: #232323;
+  --text-primary: #343c6a;
+  --text-search: #8ba3cb;
+  --credit-card-light-text: #718ebf;
+  --boarder-color: #dfeaf2;
+  --yelow-light: #fff5d9;
+  --blue-light: #e7edff;
+  --green-light: #dcfaf8;
+  --red: #ff4b4a;
+  --green: #41d4a8;
+  --blue: #396aff;
+  --blue-input-light: #edf1f7;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Inter, system-ui;
+  line-height: 1.5;
+}
+
+* {
+  font-family: Inter, system-ui;
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+svg:hover {
+  color: #232323;
+}
+
+button {
+  cursor: pointer;
+}
