@@ -1,6 +1,5 @@
 import axios from "axios";
 import { CardType, User } from "../models";
-
 const getUser = () => {
   const res = axios
     .get("../../backend/user.json")
