@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Layout from "../../layouts";
 import Tabs from "../../components/tabs";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import profile from "../../assets/images/profilepic.svg";
 import ProfileAvatar from "../../components/profileavatar";
 import { MainButton } from "../../components/buttons";
@@ -109,6 +109,10 @@ const SettingsPage = () => {
     }
   };
 
+  useEffect(() => {
+    setUserData(user);
+  }, [user]);
+
   const handleInputChange = (event: any) => {
     const { name, value } = event.target;
     setUserData({ ...userData, [name]: value } as User);
@@ -131,7 +135,8 @@ const SettingsPage = () => {
 
   return (
     <Layout>
-      {loading && <LineLoader />}
+      {loading || (!user && <LineLoader />)}
+
       <StyledSettingsPage>
         <section className="settings">
           <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />

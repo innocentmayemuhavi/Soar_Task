@@ -53,10 +53,13 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         const res = await getUser();
         if (res) {
           setUser(res);
+          setUser({
+            ...res,
+          });
           setLoading(false);
         }
-      } catch (error) {
-        console.error(error);
+      } catch (_) {
+        alert(" An Error has  Occured,Try again later");
       }
     })();
 

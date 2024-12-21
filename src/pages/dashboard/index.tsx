@@ -280,8 +280,8 @@ const Dashboard = () => {
         setBalanceHistory(balanceHistory);
         setExpencesStats(expencesStats);
         setCards(cards!);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+      } catch (_) {
+        alert(" An Error has  Occured,Try again later");
       } finally {
         setIsFetching(false);
       }

@@ -73,7 +73,7 @@ const RecentTransaction = () => {
   useEffect(() => {
     getRecentTransactions()
       .then((data) => setData(data))
-      .catch((error) => alert(error))
+      .catch((_) => alert(_))
       .finally(() => setLoading(false));
   }, []);
 

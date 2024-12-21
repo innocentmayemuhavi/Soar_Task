@@ -10,6 +10,6 @@
     "user_name": "Charlene Reed",
     "city": "San Jose",
     "country": "USA",
-    "profile_image": "../../src/assets/images/profilepic.svg"
+    "profile_image": "./images/profilepic.svg"
   }
 }

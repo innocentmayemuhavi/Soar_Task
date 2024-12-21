@@ -6,7 +6,7 @@
       "date": "28 January 2021",
       "description": "Deposit from my Card",
       "type": "card",
-      "image": "../src/assets/icons/card-transaction-icon.svg",
+      "image": "./images/card-transaction-icon.svg",
       "color": "var(--yelow-light)"
     },
     {
@@ -15,7 +15,7 @@
       "date": "25 January 2021",
       "description": "Deposit Paypal",
       "type": "paypal",
-      "image": "../src/assets/icons/paypall-icon.svg",
+      "image": "./images/paypall-icon.svg",
       "color": "var(--blue-light)"
     },
     {
@@ -24,7 +24,7 @@
       "date": "21 January 2021",
       "description": "Jemi Wilson",
       "type": "card",
-      "image": "../src/assets/icons/card-transaction-icon.svg",
+      "image": "./images/person-transaction.svg",
       "color": "var(--green-light)"
     },
     {
@@ -32,8 +32,8 @@
       "amount": 400,
       "date": "21 January 2021",
       "description": "Jemi Wilson",
-      "type": "card",
-      "image": "../src/assets/icons/card-transaction-icon.svg",
+      "type": "person",
+      "image": "./images/person-transaction.svg",
       "color": "var(--green-light)"
     },
     {
@@ -41,8 +41,8 @@
       "amount": 400,
       "date": "21 January 2021",
       "description": "Jemi Wilson",
-      "type": "card",
-      "image": "../src/assets/icons/card-transaction-icon.svg",
+      "type": "person",
+      "image": "./images/person-transaction.svg",
       "color": "var(--green-light)"
     },
     {
@@ -50,8 +50,8 @@
       "amount": 400,
       "date": "21 January 2021",
       "description": "Jemi Wilson",
-      "type": "card",
-      "image": "../src/assets/icons/card-transaction-icon.svg",
+      "type": "person",
+      "image": "./images/person-transaction.svg",
       "color": "var(--green-light)"
     }
   ]

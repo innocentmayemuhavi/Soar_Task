@@ -6,8 +6,8 @@ const getUser = () => {
     .then((res) => {
       return res.data.data as User;
     })
-    .catch((error) => {
-      console.error(error);
+    .catch((_) => {
+      alert(" An Error has  Occured,Try again later");
       return;
     });
 
@@ -16,12 +16,12 @@ const getUser = () => {
 
 const getCards = () => {
   const res = axios
-    .get("../../backend/cards.json")
+    .get("./backend/cards.json")
     .then((res) => {
       return res.data.data.cards as CardType[];
     })
-    .catch((error) => {
-      console.error(error);
+    .catch((_) => {
+      alert(" An Error has  Occured,Try again later");
       return;
     });
   return res;
@@ -29,36 +29,36 @@ const getCards = () => {
 
 const getExpencesStats = () => {
   const res = axios
-    .get("../../backend/expense-stats.json")
+    .get("./backend/expense-stats.json")
     .then((res) => {
       return res.data.data;
     })
-    .catch((error) => {
-      console.error(error);
+    .catch((_) => {
+      alert(" An Error has  Occured,Try again later");
       return;
     });
   return res;
 };
 const getBalanceHistory = () => {
   const res = axios
-    .get("../../backend/balance-history.json")
+    .get("./backend/balance-history.json")
     .then((res) => {
       return res.data.data;
     })
-    .catch((error) => {
-      console.error(error);
+    .catch((_) => {
+      alert(" An Error has  Occured,Try again later");
       return;
     });
   return res;
 };
 const getRecentTransactions = () => {
   const res = axios
-    .get("../../backend/recent-transactions.json")
+    .get("./backend/recent-transactions.json")
     .then((res) => {
       return res.data.data;
     })
-    .catch((error) => {
-      console.error(error);
+    .catch((_) => {
+      alert(" An Error has  Occured,Try again later");
       return;
     });
   return res;
@@ -66,12 +66,12 @@ const getRecentTransactions = () => {
 
 const getWeeklyActivity = () => {
   const res = axios
-    .get("../../backend/weekly-activity.json")
+    .get("./backend/weekly-activity.json")
     .then((res) => {
       return res.data.data;
     })
-    .catch((error) => {
-      console.error(error);
+    .catch((_) => {
+      alert(" An Error has  Occured,Try again later");
       return;
     });
   return res;
