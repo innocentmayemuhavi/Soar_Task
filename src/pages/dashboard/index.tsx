@@ -1,34 +1,46 @@
 import styled from "styled-components";
 import Layout from "../../layouts";
 import CreditCard from "../../components/creditcard";
-import RecentTransaction from "../../components/recent_transactions";
+import RecentTransaction from "../../components/recent-transactions";
 import RoundedIconButton, { TextButton } from "../../components/buttons";
 import Charts from "../../components/charts";
 
 import ProfileAvatar from "../../components/profileavatar";
 import arrow_right_ios from "../../assets/icons/arrow-right-ios.svg";
 import send from "../../assets/icons/send.svg";
+import { quickTransfer } from "../../constants/constants";
+import { useEffect, useState } from "react";
 import {
-  lineChartData,
-  pieData,
-  quickTransfer,
-  weeklyActivityData,
-} from "../../constants/constants";
+  getBalanceHistory,
+  getCards,
+  getExpencesStats,
+  getWeeklyActivity,
+} from "../../services";
+import { LineLoader } from "../../components/lineloader";
+import { CardType } from "../../models";
+import SectionLoader from "../../components/section-loading";
 
+const MiniResponsiveDiv = styled.div`
+  max-width: 350px;
+  @media (max-width: 1250px) {
+    width: 100%;
+    max-width: 100%;
+  }
+`;
 const StyledDashboard = styled.div`
   padding: 20px;
-  max-width: 1250px;
+  max-width: 1110px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   .first-section {
     display: flex;
-    gap: 20px;
+    gap: 30px;
+    flex-direction: row;
+    justify-content: start;
     align-items: flex-start;
-    justify-content: flex-start;
     flex: 1;
     flex-wrap: wrap;
-    flex-direction: row;
 
     &-creditcard {
       display: flex;
@@ -128,6 +140,7 @@ const StyledDashboard = styled.div`
   }
   .page-section {
     display: flex;
+
     gap: 30px;
     flex-direction: row;
     justify-content: flex-start;
@@ -202,6 +215,9 @@ const StyledDashboard = styled.div`
               align-items: center;
               justify-content: center;
               cursor: pointer;
+              &:hover {
+                border: 2px solid var(--blue);
+              }
             }
           }
         }
@@ -240,8 +256,39 @@ const StyledDashboard = styled.div`
 `;
 
 const Dashboard = () => {
+  const [weeklyActivity, setWeeklyActivity] = useState<any[]>([]);
+  const [expencesStats, setExpencesStats] = useState<any[]>([]);
+  const [balanceHistory, setBalanceHistory] = useState<any[]>([]);
+  const [fetching, setIsFetching] = useState<boolean>(true);
+  const [cards, setCards] = useState<CardType[]>([]);
+  const handleQuickTransfer = (event: any) => {
+    event.preventDefault();
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const weeklyActivity = await getWeeklyActivity();
+        const balanceHistory = await getBalanceHistory();
+        const expencesStats = await getExpencesStats();
+        const cards = await getCards();
+
+        setWeeklyActivity(weeklyActivity);
+        setBalanceHistory(balanceHistory);
+        setExpencesStats(expencesStats);
+        setCards(cards!);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsFetching(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Layout>
+      {fetching && <LineLoader />}
       <StyledDashboard>
         <div className="first-section">
           <div
@@ -253,20 +300,29 @@ const Dashboard = () => {
             <div className="first-section-creditcard">
               <div className="section-header">
                 <div className="section-header-title">My Cards</div>
-                <TextButton text="View All" onClick={() => {}} />
+                <TextButton text="See All" onClick={() => {}} />
               </div>
               <div className="first-section-creditcard-content">
-                <CreditCard isdark={true} />
-                <CreditCard isdark={false} />
+                {fetching ? (
+                  <SectionLoader />
+                ) : (
+                  <>
+                    {cards.map((card) => (
+                      <CreditCard key={card.id} card={card} />
+                    ))}
+                  </>
+                )}
               </div>
             </div>
           </div>
-          <div className="first-section-recent-transactions">
-            <div className="section-header">
-              <div className="section-header-title">Recent Transactions</div>
+          <MiniResponsiveDiv>
+            <div className="first-section-recent-transactions">
+              <div className="section-header">
+                <div className="section-header-title">Recent Transactions</div>
+              </div>
+              <RecentTransaction />
             </div>
-            <RecentTransaction />
-          </div>
+          </MiniResponsiveDiv>
         </div>
         <div className="page-section">
           <div className="page-section-content">
@@ -274,68 +330,91 @@ const Dashboard = () => {
               <div className="section-header-title">Weekly Activity</div>
             </div>
             <div className="page-section-content-chart">
-              <Charts type="bar" data={weeklyActivityData} />
+              {fetching ? (
+                <SectionLoader />
+              ) : (
+                <Charts type="bar" data={weeklyActivity} />
+              )}
             </div>
           </div>
-          <div className="page-section-content">
-            <div className="section-header">
-              <div className="section-header-title">Expense Statistics</div>
+          <MiniResponsiveDiv>
+            <div className="page-section-content">
+              <div className="section-header">
+                <div className="section-header-title">Expense Statistics</div>
+              </div>
+              <div className="page-section-content-expences">
+                {fetching ? (
+                  <SectionLoader />
+                ) : (
+                  <Charts type="pie" data={expencesStats} />
+                )}
+              </div>
             </div>
-            <div className="page-section-content-expences">
-              <Charts type="pie" data={pieData} />
-            </div>
-          </div>
+          </MiniResponsiveDiv>
         </div>
         <div className="page-section">
-          <div className="page-section-content">
-            <div className="section-header">
-              <div className="section-header-title">Quick Transfers</div>
-            </div>
-            <div className="page-section-content-expences">
-              <div className="page-section-content-quick-transfer">
-                <div className="page-section-quick-transfer-content-profiles">
-                  {quickTransfer.map((transfer) => (
-                    <div key={transfer.name}>
-                      <ProfileAvatar
-                        image={transfer.image}
-                        hasEdit={false}
-                        size={"large"}
+          <MiniResponsiveDiv>
+            <div className="page-section-content">
+              <div className="section-header">
+                <div className="section-header-title">Quick Transfers</div>
+              </div>
+              <div className="page-section-content-expences">
+                <div className="page-section-content-quick-transfer">
+                  <div className="page-section-quick-transfer-content-profiles">
+                    {quickTransfer.map((transfer) => (
+                      <div key={transfer.name}>
+                        <ProfileAvatar
+                          image={transfer.image}
+                          hasEdit={false}
+                          size={"large"}
+                        />
+                        <div className="page-section-quick-transfer-content-profiles-name">
+                          {transfer.name}
+                        </div>
+                        <div className="page-section-quick-transfer-content-profiles-role">
+                          {transfer.role}
+                        </div>
+                      </div>
+                    ))}
+                    <RoundedIconButton
+                      icon={arrow_right_ios}
+                      showBg
+                      backgroundColor={"var(--white)"}
+                      hasShadow
+                      shadowColor={"#E7E4E8CC"}
+                      onClick={function (): void {}}
+                    />
+                  </div>
+                  <div className="page-section-quick-transfer-content-amount">
+                    <label>Write Amount</label>
+                    <form
+                      className="page-section-quick-transfer-content-amount-input"
+                      onSubmit={handleQuickTransfer}
+                    >
+                      <input
+                        type="number"
+                        placeholder="Enter Amount"
+                        required
                       />
-                      <div className="page-section-quick-transfer-content-profiles-name">
-                        {transfer.name}
-                      </div>
-                      <div className="page-section-quick-transfer-content-profiles-role">
-                        {transfer.role}
-                      </div>
-                    </div>
-                  ))}
-                  <RoundedIconButton
-                    icon={arrow_right_ios}
-                    showBg
-                    backgroundColor={"var(--white)"}
-                    hasShadow
-                    shadowColor={"#E7E4E8CC"}
-                    onClick={function (): void {}}
-                  />
-                </div>
-                <div className="page-section-quick-transfer-content-amount">
-                  <label>Write Amount</label>
-                  <form className="page-section-quick-transfer-content-amount-input">
-                    <input type="number" placeholder="Enter Amount" required />
-                    <button>
-                      Send <img src={send} />
-                    </button>
-                  </form>
+                      <button>
+                        Send <img src={send} />
+                      </button>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </MiniResponsiveDiv>
           <div className="page-section-content">
             <div className="section-header">
               <div className="section-header-title">Balance History</div>
             </div>
             <div className="page-section-content-chart">
-              <Charts type="line" data={lineChartData} />
+              {fetching ? (
+                <SectionLoader />
+              ) : (
+                <Charts type="line" data={balanceHistory} />
+              )}
             </div>
           </div>
         </div>

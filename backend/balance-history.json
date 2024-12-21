@@ -1,0 +1,15 @@
+{
+  "data": {
+    "labels": ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan"],
+    "datasets": [
+      {
+        "label": "Balance History",
+        "data": [65, 59, 80, 81, 56, 55, 40],
+        "fill": true,
+        "backgroundColor": "rgba(24, 20, 243, 0.2)",
+        "borderColor": "#1814F3",
+        "tension": 0.3
+      }
+    ]
+  }
+}

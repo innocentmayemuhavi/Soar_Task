@@ -50,11 +50,9 @@ const StyledMobileHeader = styled.header`
 `;
 
 const MobileHeader = ({ title }: { title: string }) => {
-  const { setShowSideBar, showSideBar } = useContext(CoreContext);
+  const { setShowSideBar, showSideBar, user } = useContext(CoreContext);
 
-  useEffect(() => {
-    console.log(showSideBar);
-  }, [showSideBar]);
+  useEffect(() => {}, [showSideBar]);
 
   return (
     <StyledMobileHeader>
@@ -65,7 +63,11 @@ const MobileHeader = ({ title }: { title: string }) => {
           showBg={false}
         />
         <div className="header-main-title">{title}</div>
-        <ProfileAvatar image={profile} hasEdit={false} size={"medium"} />
+        <ProfileAvatar
+          image={user?.profile_image ?? profile}
+          hasEdit={false}
+          size={"medium"}
+        />
       </div>
 
       <div className="header-search">

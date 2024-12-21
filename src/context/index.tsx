@@ -1,5 +1,6 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { User, CardType, ExpenceType, BalanceType } from "../models";
+import { getUser } from "../services";
 
 interface CoreContextType {
   loading: boolean;
@@ -45,6 +46,22 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [balances, setBalances] = useState<BalanceType[]>([]);
   const [cards, setCards] = useState<CardType[]>([]);
   const [showSideBar, setShowSideBar] = useState<boolean>(false);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await getUser();
+        if (res) {
+          setUser(res);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+
+    return () => {};
+  }, []);
 
   return (
     <CoreContext.Provider

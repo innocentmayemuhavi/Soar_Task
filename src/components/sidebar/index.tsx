@@ -10,7 +10,7 @@ import services from "../../assets/icons/services.svg";
 import myprivileges from "../../assets/icons/myprivileges.svg";
 import settings from "../../assets/icons/settings.svg";
 import task from "../../assets/icons/task.svg";
-import { NavLink, To } from "react-router";
+import { NavLink, To, useNavigate } from "react-router";
 import Icon from "../icons";
 import { CoreContext } from "../../context";
 const StyledSidebar = styled.aside<{
@@ -25,6 +25,7 @@ const StyledSidebar = styled.aside<{
   position: ${({ showSideBar }) => (showSideBar ? "fixed" : "relative")};
   .menu {
     &-title {
+      cursor: pointer;
       padding: 5px 0px;
       display: flex;
       align-items: center;
@@ -50,9 +51,6 @@ const StyledSidebar = styled.aside<{
         height: 40px;
         background-color: var(--black);
         border-radius: 0 5px 5px 0;
-        &: hover {
-          color: var(--black);
-        }
       }
     }
 
@@ -70,9 +68,24 @@ const StyledSidebar = styled.aside<{
       color: var(--gray);
       text-decoration: none;
       font-weight: 500;
-
+      width: 100%;
       &: hover {
         color: var(--black);
+        svg {
+          g {
+            path {
+              fill: var(--black);
+            }
+          }
+        }
+        svg {
+          path {
+            fill: var(--black);
+          }
+        }
+        div {
+          background-color: var(--black);
+        }
       }
     }
     .menu-item-active {
@@ -90,7 +103,7 @@ const StyledSidebar = styled.aside<{
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
     color: var(--gray);
     text-decoration: none;
     font-weight: 500;
@@ -101,7 +114,18 @@ const StyledSidebar = styled.aside<{
   }
 `;
 
+const StyledActiveIndicator = styled.div<{ isActive: boolean }>`
+  width: 5px;
+  height: 40px;
+  background-color: ${({ isActive }) =>
+    isActive ? "var(--black)" : "transparent"};
+  border-radius: 0 5px 5px 0;
+  &: hover {
+    background-color: var(--black);
+  }
+`;
 const SideBar = () => {
+  const navigation = useNavigate();
   const [links, setLinks] = useState<
     {
       name: string;
@@ -111,7 +135,7 @@ const SideBar = () => {
     }[]
   >([]);
 
-  const { showSideBar, setShowSideBar } = useContext(CoreContext);
+  const { showSideBar } = useContext(CoreContext);
 
   useEffect(() => {
     setLinks([
@@ -174,7 +198,7 @@ const SideBar = () => {
   return (
     <StyledSidebar showSideBar={showSideBar}>
       <div className="menu">
-        <div className="menu-title">
+        <div className="menu-title" onClick={() => navigation("/")}>
           <img src={task} />
           <h3>Soar Task</h3>
         </div>
@@ -205,24 +229,17 @@ const SideBar = () => {
                     }
                   >
                     {({ isActive }) => (
-                      <div className="menu-item">
-                        <div
-                          className="menu-item-active-indicator"
-                          style={{
-                            backgroundColor: isActive
-                              ? "var(--black)"
-                              : "var(--white)",
-                          }}
-                        >
-                          {" "}
-                        </div>
+                      <section className="menu-item">
+                        <StyledActiveIndicator isActive={isActive}>
+                          <div className="menu-active-indicator"> </div>
+                        </StyledActiveIndicator>
 
                         <Icon
                           name={link.name.toLowerCase()}
                           isActive={isActive}
                         />
                         <span>{link.name}</span>
-                      </div>
+                      </section>
                     )}
                   </NavLink>
                 )}

@@ -66,6 +66,9 @@ const StyledTextButton = styled.div`
   cursor: pointer;
   font-size: 17px;
   font-weight: 600;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const TextButton = ({
@@ -89,20 +92,20 @@ const StyledMainButton = styled.button<{
   color: ${(props) => (props.color ? props.color : "var(--white)")};
   padding: 10px 20px;
   border: none;
-  cursor: pointer;
+  cursor: ${(props) => (props.isDisabled ? "not-allowed" : "pointer")};
   border-radius: 15px;
-  fon-weight: 500;
+  font-weight: 500;
   width: 190px;
 
   &:hover {
-    background-color: var(--black);
-    box-shadow: 0px 2px 2px var(--black);
+    border: 2px solid var(--blue);
   }
 
   &:disabled {
     background-color: var(--gray);
     cursor: not-allowed;
   }
+
   @media (max-width: 768px) {
     width: 100%;
     border-radius: 9px;

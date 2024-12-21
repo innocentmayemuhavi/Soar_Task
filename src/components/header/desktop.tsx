@@ -5,6 +5,8 @@ import notification from "../../assets/icons/notifications.svg";
 import RoundedIconButton from "../buttons";
 import profile from "../../assets/images/profilepic.svg";
 import ProfileAvatar from "../profileavatar";
+import { useContext } from "react";
+import { CoreContext } from "../../context";
 const StyledDesktopHeader = styled.header`
   background-color: var(--white);
   position: sticky;
@@ -48,6 +50,7 @@ const StyledDesktopHeader = styled.header`
 `;
 
 const DesktopHeader = ({ title }: { title: string }) => {
+  const { user } = useContext(CoreContext);
   return (
     <StyledDesktopHeader>
       <div className="header-title">{title}</div>
@@ -58,7 +61,11 @@ const DesktopHeader = ({ title }: { title: string }) => {
         </div>
         <RoundedIconButton icon={settingsicon} onClick={() => {}} showBg />
         <RoundedIconButton icon={notification} onClick={() => {}} showBg />
-        <ProfileAvatar image={profile} hasEdit={false} size={"medium"} />
+        <ProfileAvatar
+          image={user?.profile_image ?? profile}
+          hasEdit={false}
+          size={"medium"}
+        />
       </div>
     </StyledDesktopHeader>
   );

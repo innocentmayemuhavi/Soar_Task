@@ -1,6 +1,6 @@
 interface User {
   name: string;
-  username: string;
+  user_name: string;
   email: string;
   date_of_birth: string;
   permanent_address: string;
@@ -9,7 +9,7 @@ interface User {
   country: string;
   city: string;
   password: string;
-  setBalances: (balances: BalanceType[]) => void;
+  profile_image: string;
 }
 
 interface RecentTransactionType {
@@ -63,6 +63,16 @@ interface TabsType {
   name: string;
   icon: string;
   isDisabled: boolean;
+}
+
+interface CardType {
+  id: number;
+  card_number: string;
+  card_holder: string;
+  expiration_date: string;
+  cvv: number;
+  balance: number;
+  type: string;
 }
 
 export type {

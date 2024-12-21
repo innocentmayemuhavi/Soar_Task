@@ -1,0 +1,15 @@
+{
+  "data": {
+    "labels": ["Bill Expense", "Others", "Investment", "Entertainment"],
+    "datasets": [
+      {
+        "label": "Expenses",
+        "data": [15, 35, 20, 30],
+        "backgroundColor": ["#FC7900", "#232323", "#396AFF", "#343C6A"],
+        "borderColor": ["#FC7900", "#232323", "#396AFF", "#343C6A"],
+        "borderWidth": 1,
+        "hoverOffset": 50
+      }
+    ]
+  }
+}

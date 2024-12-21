@@ -1,0 +1,23 @@
+{
+  "data": {
+    "labels": ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"],
+    "datasets": [
+      {
+        "label": "Deposits",
+        "data": [650, 500, 380, 681, 356, 455, 740],
+        "backgroundColor": "#396AFF",
+        "borderColor": "#396AFF",
+        "borderWidth": 1,
+        "borderRadius": 30
+      },
+      {
+        "label": "Withdrawals",
+        "data": [300, 325, 440, 435, 720, 815, 510],
+        "backgroundColor": "#232323",
+        "borderColor": "#232323",
+        "borderWidth": 1,
+        "borderRadius": 30
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "data": {
+    "name": "Charlene Reed",
+    "email": "charlenereed@gmail.com",
+    "password": "123456",
+    "date_of_birth": "25 January 1990",
+    "permanent_address": "San Jose,California,USA",
+    "present_address": "San Jose,California,USA",
+    "postal_code": "95134",
+    "user_name": "Charlene Reed",
+    "city": "San Jose",
+    "country": "USA",
+    "profile_image": "../../src/assets/images/profilepic.svg"
+  }
+}

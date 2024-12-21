@@ -1,9 +1,10 @@
-import React from "react";
 import styled from "styled-components";
-import light_chip from "../../assets/icons/light_chip.svg";
-import dark_chip from "../../assets/icons/dark_chip.svg";
+import light_chip from "../../assets/icons/light-chip.svg";
+import dark_chip from "../../assets/icons/dark-chip.svg";
 import mastercard from "../../assets/icons/mastercard.svg";
 import mastercard_light from "../../assets/icons/mastercard-light.svg";
+import { CardType } from "../../models";
+import { maskCardNumber } from "../../utils";
 
 const StyledCreditCard = styled.div<{ isdark: boolean }>`
   border-radius: 25px;
@@ -14,6 +15,7 @@ const StyledCreditCard = styled.div<{ isdark: boolean }>`
   max-height: 250px;
   min-width: 300px;
   max-width: 350px;
+  cursor: pointer;
 
   border: ${(props) =>
     props.isdark ? "none" : " 1px solid var(--boarder-color)"};
@@ -83,37 +85,39 @@ const StyledCreditCard = styled.div<{ isdark: boolean }>`
   }
 `;
 
-interface CreditCardProps {
-  isdark: boolean;
-}
-
-const CreditCard: React.FC<CreditCardProps> = ({ isdark }) => {
+const CreditCard = ({ card }: { card: CardType }) => {
   return (
-    <StyledCreditCard isdark={isdark}>
+    <StyledCreditCard isdark={card.type === "black"}>
       <div className="credit-card-header">
         <div className="credit-card-header-balance">
           <p>Balance</p>
-          <div>$5,756</div>
+          <div>{card.balance}</div>
         </div>
         <div className="credit-card-header-chip">
-          <img src={isdark ? light_chip : dark_chip} alt="chip" />
+          <img
+            src={card.type === "black" ? light_chip : dark_chip}
+            alt="chip"
+          />
         </div>
       </div>
       <div className="credit-card-details">
         <div className="credit-card-details-holder">
           <p>CARD HOLDER</p>
-          <div>Eddy Cusuma</div>
+          <div>{card.card_holder}</div>
         </div>
         <div className="credit-card-details-expiry">
           <p>VALID THRU</p>
-          <div>12/22</div>
+          <div>{card.expiration_date}</div>
         </div>
       </div>
       <div className="credit-card-footer">
         <div className="credit-card-footer-number">
-          <p>3778 **** **** 1234</p>
+          <p>{maskCardNumber(card.card_number)}</p>
         </div>
-        <img src={isdark ? mastercard : mastercard_light} alt="chip" />
+        <img
+          src={card.type === "black" ? mastercard : mastercard_light}
+          alt="chip"
+        />
       </div>
     </StyledCreditCard>
   );

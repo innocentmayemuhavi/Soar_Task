@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { MainButton } from "../buttons";
 import pencil from "../../assets/icons/pencil.svg";
+import { useRef } from "react";
+
 const StyledAvatar = styled.div<{
   size: string;
   hasEdit: boolean;
@@ -19,7 +20,6 @@ const StyledAvatar = styled.div<{
       ? "40px"
       : "60px"};
   position: relative;
-
   border-radius: 50%;
   cursor: pointer;
 
@@ -28,6 +28,7 @@ const StyledAvatar = styled.div<{
     width: 100%;
     border-radius: 50%;
   }
+
   button {
     background-color: var(--black);
     border: none;
@@ -37,6 +38,27 @@ const StyledAvatar = styled.div<{
     width: 20px;
     bottom: 0;
     right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+
+    input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0; /* Make input invisible */
+      cursor: pointer;
+      z-index: 1; /* Input is beneath the button */
+    }
+
+    img {
+      height: 10px;
+      z-index: 3;
+    }
   }
 `;
 
@@ -49,17 +71,25 @@ const ProfileAvatar = ({
   image: string;
   hasEdit: boolean;
   size: string;
-  onEdit?: () => void;
+  onEdit?: (e: any) => void;
 }) => {
+  const inputFileRef = useRef<HTMLInputElement>(null);
   return (
     <StyledAvatar size={size} hasEdit={hasEdit}>
       <img src={image} alt="profile" />
       {hasEdit && (
-        <button>
+        <button
+          onClick={() => inputFileRef.current && inputFileRef.current.click()}
+        >
+          <input
+            type="file"
+            accept="image/*"
+            onChange={onEdit}
+            ref={inputFileRef}
+          />
           <img src={pencil} alt="edit" />
         </button>
       )}
-      <div></div>
     </StyledAvatar>
   );
 };

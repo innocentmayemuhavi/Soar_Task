@@ -1,17 +1,20 @@
 import styled from "styled-components";
 import Layout from "../../layouts";
 import Tabs from "../../components/tabs";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import profile from "../../assets/images/profilepic.svg";
 import ProfileAvatar from "../../components/profileavatar";
 import { MainButton } from "../../components/buttons";
 import { tabs } from "../../constants/constants";
+import { CoreContext } from "../../context";
+import { User } from "../../models";
+import { LineLoader } from "../../components/lineloader";
 const StyledSettingsPage = styled.section`
   padding: 20px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  max-width: 1250px;
+  max-width: 1110px;
 
   .settings {
     background-color: var(--white);
@@ -47,7 +50,7 @@ const StyledSettingsPage = styled.section`
             margin-bottom: 10px;
 
             label {
-              font-size: 14px;
+              font-size: 16px;
               font-weight: 400;
               color: var(--black);
             }
@@ -57,6 +60,9 @@ const StyledSettingsPage = styled.section`
               border: 1px solid var(--boarder-color);
               border-radius: 15px;
               outline: none;
+              color: var(--credit-card-light-text);
+              font-size: 15px;
+              font-weight: 400;
             }
           }
         }
@@ -89,18 +95,56 @@ const StyledSettingsPage = styled.section`
 
 const SettingsPage = () => {
   const [activeTab, setActiveTab] = useState("Edit Profile");
+  const { user, setUser, loading } = useContext(CoreContext);
+  const [userData, setUserData] = useState<User | null>(user);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
 
   const handleSave = (event: any) => {
     event.preventDefault();
+    if (userData === user) {
+      alert("No changes made");
+    } else {
+      setUser(userData!);
+      alert("Changes saved successfully");
+    }
   };
+
+  const handleInputChange = (event: any) => {
+    const { name, value } = event.target;
+    setUserData({ ...userData, [name]: value } as User);
+  };
+  const handleImageChange = (event: any) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result as string);
+        setUserData({
+          ...userData,
+          profile_image: reader.result as string,
+        } as User);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <Layout>
+      {loading && <LineLoader />}
       <StyledSettingsPage>
         <section className="settings">
           <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
           <div className="settings-edit-profile">
             <div>
-              <ProfileAvatar image={profile} hasEdit={true} size={"large"} />
+              <ProfileAvatar
+                image={
+                  profileImage ? profileImage : user?.profile_image ?? profile
+                }
+                hasEdit={true}
+                size={"large"}
+                onEdit={(e) => handleImageChange(e)}
+              />
             </div>
             <form className="settings-edit-profile-form" onSubmit={handleSave}>
               <div className="settings-edit-profile-form-content">
@@ -111,8 +155,11 @@ const SettingsPage = () => {
                       <input
                         type="text"
                         id="name"
+                        name="name"
                         placeholder="Enter your name"
                         required
+                        value={userData?.name}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="settings-edit-profile-form-content-input">
@@ -122,6 +169,8 @@ const SettingsPage = () => {
                         id="email"
                         placeholder="Enter email"
                         required
+                        value={userData?.email}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="settings-edit-profile-form-content-input">
@@ -129,8 +178,11 @@ const SettingsPage = () => {
                       <input
                         type="date"
                         id="date"
+                        name="date_of_birth"
                         placeholder="Date of Birth"
                         required
+                        value={userData?.date_of_birth}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="settings-edit-profile-form-content-input">
@@ -139,9 +191,12 @@ const SettingsPage = () => {
                       </label>
                       <input
                         type="text"
+                        name="permanent_address"
                         id="parmanent-address"
                         placeholder="Street, City, Country"
                         required
+                        value={userData?.permanent_address}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="settings-edit-profile-form-content-input">
@@ -149,8 +204,11 @@ const SettingsPage = () => {
                       <input
                         type="number"
                         id="Postal Code"
+                        name="postal_code"
                         placeholder="Enter Postal Code"
                         required
+                        value={userData?.postal_code}
+                        onChange={handleInputChange}
                       />
                     </div>
                   </div>
@@ -160,8 +218,11 @@ const SettingsPage = () => {
                       <input
                         type="text"
                         id="username"
+                        name="user_name"
                         placeholder="Enter username"
                         required
+                        value={userData?.user_name}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="settings-edit-profile-form-content-input">
@@ -169,17 +230,23 @@ const SettingsPage = () => {
                       <input
                         type="password"
                         id="password"
+                        name="password"
                         placeholder="Enter Password"
                         required
+                        value={userData?.password}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="settings-edit-profile-form-content-input">
                       <label htmlFor="present-address">Present Address</label>
                       <input
                         type="text"
+                        name="present_address"
                         id="present-address"
                         placeholder="Street, City, Country"
                         required
+                        value={userData?.present_address}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="settings-edit-profile-form-content-input">
@@ -187,8 +254,11 @@ const SettingsPage = () => {
                       <input
                         type="text"
                         id="City"
+                        name="city"
                         placeholder="Enter City"
                         required
+                        value={userData?.city}
+                        onChange={handleInputChange}
                       />
                     </div>
                     <div className="settings-edit-profile-form-content-input">
@@ -196,15 +266,20 @@ const SettingsPage = () => {
                       <input
                         type="text"
                         id="Country"
+                        name="country"
                         placeholder="Enter Country"
                         required
+                        value={userData?.country}
+                        onChange={handleInputChange}
                       />
                     </div>
                   </div>
                 </div>
               </div>
               <div className="settings-edit-profile-form-actions">
-                <MainButton onClick={() => {}}>Save</MainButton>
+                <MainButton isDisabled={user === userData} onClick={() => {}}>
+                  Save
+                </MainButton>
               </div>
             </form>
           </div>

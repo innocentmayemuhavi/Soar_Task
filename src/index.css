@@ -27,7 +27,8 @@
 }
 
 html,
-body {
+body,
+section {
   margin: 0;
   padding: 0;
   font-family: Inter, system-ui;
@@ -47,8 +48,11 @@ h1 {
   width: 10px;
 }
 
-svg:hover {
-  color: #232323;
+svg {
+  &:hover {
+    fill: var(--black);
+    color: var(--black);
+  }
 }
 
 button {
