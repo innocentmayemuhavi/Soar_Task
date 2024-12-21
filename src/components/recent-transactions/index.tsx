@@ -13,7 +13,7 @@ const StyledTransactions = styled.div`
   flex-direction: column;
   min-width: 300px;
   overflow-y: auto;
-  max-height: 200px;
+  max-height: 190px;
   gap: 20px;
   .transaction {
     display: flex;

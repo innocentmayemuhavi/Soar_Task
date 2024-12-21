@@ -5,7 +5,6 @@ import { useWindowWidth } from "../utils";
 import Overlay from "../components/overlay";
 import { useContext } from "react";
 import { CoreContext } from "../context";
-import { LineLoader } from "../components/lineloader";
 
 const StyledLayout = styled.section`
   background-color: #f5f5f5;
@@ -55,7 +54,6 @@ const StyledLayout = styled.section`
 
 const Layout = ({
   children,
-  className = "",
 }: {
   children: React.ReactNode;
   className?: string;

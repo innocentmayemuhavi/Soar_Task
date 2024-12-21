@@ -21,7 +21,7 @@ import { CardType } from "../../models";
 import SectionLoader from "../../components/section-loading";
 
 const MiniResponsiveDiv = styled.div`
-  max-width: 350px;
+  max-width: 420px;
   @media (max-width: 1250px) {
     width: 100%;
     max-width: 100%;
@@ -92,14 +92,16 @@ const StyledDashboard = styled.div`
       width: 100%;
       flex-direction: column;
       gap: 20px;
+      heght: 300px;
       &-quick-transfer {
         background-color: var(--white);
         display: flex;
+        width: 445px;
         flex-direction: column;
         align-items: center;
         border-radius: 25px;
         padding: 25px;
-        height: 100%;
+        height: 270px;
         width: 100%;
         justify-content: center;
         gap: 20px;
@@ -111,6 +113,7 @@ const StyledDashboard = styled.div`
         align-items: center;
         justify-content: center;
         width: 100%;
+
         &-quick-transfer {
           background-color: var(--white);
         }
@@ -152,6 +155,7 @@ const StyledDashboard = styled.div`
       gap: 20px;
       flex-direction: column;
       flex: 1;
+
       max-width: 350px;
       &-content {
         background-color: red;

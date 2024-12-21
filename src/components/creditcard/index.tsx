@@ -11,10 +11,13 @@ const StyledCreditCard = styled.div<{ isdark: boolean }>`
   display: flex;
   flex: 1;
   flex-direction: column;
+  justify-content: space-between;
   gap: 20px;
   max-height: 250px;
   min-width: 300px;
   max-width: 350px;
+  height: 230px;
+
   cursor: pointer;
 
   border: ${(props) =>
