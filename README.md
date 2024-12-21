@@ -36,4 +36,11 @@ Follow these steps to set up the project locally:
 4. **Open the app in your browser:**
    The app will be running at [http://localhost:5173](http://localhost:5173).
 
+## Assumptions
+
+- JSON files are used as API dummies to mock API endpoints for fetching user information,card details, charts data, and transaction history.
+- These JSON files are located in the `public/backend` directory and are used to simulate the responses from a real backend server.
+- The services in the `src/services` directory handle the fetching of data from these mock JSON files using Axios as middleware.
+
+
 
